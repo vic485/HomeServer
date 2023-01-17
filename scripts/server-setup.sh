@@ -15,7 +15,7 @@ modprobe -a zfs
 echo zfs > /etc/modules-load.d/zfs.conf
 
 # Install and setup samba
-zypper --non-interactive install zfs
+zypper --non-interactive install samba
 
 mv /etc/samba/smb.conf /etc/samba/smb.conf.bak
 cp ../templates/smb.conf /etc/samba/smb.conf
