@@ -1,0 +1,32 @@
+version: "3.7"
+
+networks:
+  traefik_proxy:
+    external:
+      name: traefik_proxy
+  default:
+    driver: bridge
+
+services:
+  qbittorrent:
+    container_name: qbittorrent
+    image: cr.hotio.dev/hotio/qbittorrent
+    ports:
+      - "8080:8080"
+    environment:
+      - PUID=${uid}
+      - PGID=${gid}
+      - UMASK=002
+      - TZ=${TZ}
+    volumes:
+      - /NAS/srvdata/qbittorrent:/config
+      - /NAS/Downloads:/downloads
+
+  watchtower:
+    container_name: watchtower
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - TZ=${TZ}
+      - WATCHTOWER_CLEANUP=true
